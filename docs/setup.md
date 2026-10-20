@@ -22,9 +22,35 @@ For an existing PyTorch environment, install the requirements and pinned
 LightX2V manually. To skip the SageAttention build, set `H3_SKIP_SAGE=1` and
 run with `--attention torch_sdpa`. Published performance uses SageAttention.
 
-## Weights
+## Download and run a sample
 
-Download the official component directories from
+Install `aria2` with your system package manager. The downloader uses 16
+connections per file, four concurrent files, and resumes interrupted transfers.
+
+```bash
+python scripts/download_models.py --profile fl2va-turbo --model-root /models/h3 --dry-run
+python scripts/download_models.py --profile fl2va-turbo --model-root /models/h3
+python scripts/sample.py --profile fl2va-turbo --model-root /models/h3 --gpus 4
+```
+
+The FL2VA source download is 144.83 GB. Converted checkpoints and runtime
+caches occupy additional disk space. `--dry-run` lists the exact files, pinned
+revisions, and remaining download size for each profile.
+
+`sample.py` converts the checkpoint once, then uses the included prompt and
+image. It reuses converted weights on later runs. Replace the profile in both
+commands with `ref2va-pdd` or `ref2va-turbo` for the reference-image samples.
+FL2VA/PDD default to 362 frames; Ref2VA Turbo defaults to 124 frames.
+Add `--num-frames 124` for a short FL2VA/PDD run. Set `--output-dir` to choose
+the destination; otherwise outputs go to `outputs/<profile>-<gpus>gpu/`.
+
+The downloader also writes `/models/h3/<profile>.json` for direct use with
+`scripts/run.py --paths`. Model files shared by the two Ref2VA profiles are
+reused. Download revisions and file sizes are saved alongside the paths file.
+
+## Use existing weights
+
+The launcher reads the official component directories from
 [MiniMaxAI/MiniMax-H3](https://huggingface.co/MiniMaxAI/MiniMax-H3).
 Each task model directory contains `transformer/`, `text_encoder/`,
 `tokenizer/`, `processor/`, `audio_vae/`, and `video_vae/`.

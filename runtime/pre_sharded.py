@@ -8,6 +8,7 @@ import torch
 from safetensors import safe_open
 
 from lightx2v.models.networks.minimax_h3.model import MiniMaxH3Model
+from runtime.checkpoint_names import normalize_final_norm
 
 
 SHARD_DIR = Path(os.environ['H3_INT8_TP_SHARD_DIR']).resolve()
@@ -58,6 +59,7 @@ def load_pre_sharded(self, unified_dtype, sensitive_layer):
             if torch.device(load_device).type != 'cpu':
                 tensor = tensor.to(load_device)
             weight_dict[key] = tensor
+    normalize_final_norm(weight_dict)
     self._validate_checkpoint_devices(weight_dict, load_device)
     print(f'H3_TP2_PRESHARDED_LOADED rank={self.tp_rank} tensors={len(weight_dict)} device={load_device}', flush=True)
     return weight_dict

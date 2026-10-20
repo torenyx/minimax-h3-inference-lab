@@ -1,97 +1,70 @@
 # 在 24GB 显卡上运行 MiniMax H3
 
-[English](README.md) · [完整实测](benchmarks/README.md) · [安装与模型准备](docs/setup.md)
+[English](README.md) · [视频画廊](https://torenyx.github.io/minimax-h3-inference-lab/docs/gallery.html) · [完整实测](benchmarks/README.md) · [安装说明](docs/setup.md)
 
-两张或四张 RTX 3090，生成视频与同步音频。仓库包含 FL2VA Larry Turbo、Ref2VA Turbo/PDD 的运行入口、显存优化、配置与成功成片。
+用**两张或四张 RTX 3090** 生成视频与原生立体声音频。三个 LightX2V 配置覆盖 Larry Turbo 首帧生成，以及 PDD、Turbo 参考图生成。
 
-**生成 15 秒音视频：四卡 FL2VA 六步含加载约 9 分 29 秒；四卡 Ref2VA PDD 八步约 11 分 19 秒。**
+## 选一条路线
 
-## 成功结果
+| 你的输入 | 运行配置 | 自带样例 |
+|---|---|---|
+| 首帧图片 | `fl2va-turbo` · Larry v4，六步 | 15 秒 · 1344×768 |
+| 参考图片 | `ref2va-pdd` · PDD，八步 | 15 秒 · 768×1344 |
+| 参考图片 | `ref2va-turbo` · LightX2V Turbo，八步 | 5 秒 · 768×1344 |
 
-INT8 ConvRot 裁剪主干、SageAttention 2、362 帧、24 fps，去噪期间 DiT 权重常驻 GPU。
+## 看成片
 
-| 任务 | 卡数 | 步数 | 去噪 | 框架总耗时 | 成片 |
-|---|---:|---:|---:|---:|---|
-| FL2VA · Larry Turbo | 2 | 6 | 656.49 s | 806.85 s | [播放](media/fl2va-turbo-2gpu.mp4) |
-| FL2VA · Larry Turbo | 4 | 6 | **450.77 s** | **568.95 s** | [播放](media/fl2va-turbo-4gpu.mp4) |
-| Ref2VA · PDD | 2 | 8 | 838.13 s | 952.81 s | [播放](media/ref2va-pdd-2gpu.mp4) |
-| Ref2VA · PDD | 4 | 8 | **571.82 s** | **678.55 s** | [播放](media/ref2va-pdd-4gpu.mp4) |
+<table>
+<tr>
+<td width="50%" valign="top">
+<h3>FL2VA · Larry Turbo</h3>
+<p align="center"><a href="media/fl2va-turbo-4gpu.mp4"><img src="media/fl2va-turbo-4gpu-poster.jpg" alt="FL2VA 四卡成片，点击播放" height="270"></a></p>
+<p>15 秒 · 1344×768 · 六步<br><b>四卡：总耗时 9:29 · 去噪 450.77 秒</b><br>两卡：总耗时 13:27 · 去噪 656.49 秒</p>
+<p><a href="media/fl2va-turbo-4gpu.mp4">播放四卡成片</a> · <a href="media/fl2va-turbo-2gpu.mp4">播放两卡成片</a></p>
+</td>
+<td width="50%" valign="top">
+<h3>Ref2VA · PDD</h3>
+<p align="center"><a href="media/ref2va-pdd-4gpu.mp4"><img src="media/ref2va-pdd-4gpu-poster.jpg" alt="Ref2VA 四卡成片，点击播放" height="270"></a></p>
+<p>15 秒 · 768×1344 · 八步<br><b>四卡：总耗时 11:19 · 去噪 571.82 秒</b><br>两卡：总耗时 15:53 · 去噪 838.13 秒</p>
+<p><a href="media/ref2va-pdd-4gpu.mp4">播放四卡成片</a> · <a href="media/ref2va-pdd-2gpu.mp4">播放两卡成片</a></p>
+</td>
+</tr>
+</table>
 
-FL2VA 使用首帧条件，分辨率 1344×768；Ref2VA 使用参考图像，分辨率 768×1344。每条路线内两卡、四卡保持输入和种子一致。总耗时包括加载、编码、去噪、解码与保存；权重和缓存提前准备。
+RTX 3090 24GB、INT8 ConvRot 裁剪主干、SageAttention 2、362 帧、24 fps。同一路线的两卡/四卡使用相同输入与种子。总耗时包括加载、编码、去噪、解码与保存；权重转换与缓存提前完成。
 
-[![FL2VA 四卡成片](media/fl2va-turbo-4gpu.png)](media/fl2va-turbo-4gpu.mp4)
+[全部五段成片](https://torenyx.github.io/minimax-h3-inference-lab/docs/gallery.html) · [阶段耗时与输入](benchmarks/README.md) · [CSV](benchmarks/successful-runs.csv)
 
-[![Ref2VA 四卡成片](media/ref2va-pdd-4gpu.png)](media/ref2va-pdd-4gpu.mp4)
+## 跑自带样例
 
-## 开始运行
-
-Linux、CUDA、两张或四张 NVIDIA GPU。实测环境为 PyTorch 2.5.1 + CUDA 12.4、SageAttention 2.2.0。
+Linux、CUDA toolkit、Python 3.10+、`aria2c`。安装脚本使用 PyTorch 2.5.1 / CUDA 12.4 和 SageAttention 2.2.0。
 
 ```bash
 git clone https://github.com/torenyx/minimax-h3-inference-lab.git
 cd minimax-h3-inference-lab
 bash scripts/setup.sh
 source .venv/bin/activate
+
+python scripts/download_models.py --profile fl2va-turbo --model-root /models/h3
+python scripts/sample.py --profile fl2va-turbo --model-root /models/h3 --gpus 4
 ```
 
-两卡 FL2VA Larry Turbo：
+下载器按固定模型版本取文件，每个文件使用 16 路连接并支持续传，同时生成路径配置。样例入口首次运行会转换权重，再用自带提示词和首帧生成 `outputs/fl2va-turbo-4gpu/trial.mp4`。
 
-```bash
-python scripts/run.py \
-  --profile fl2va-turbo --gpus 2 \
-  --model-dir /models/h3/fl2va \
-  --pruned-checkpoint /models/h3/fl2va/pruned_int8_convrot.safetensors \
-  --adapter /models/h3/larry-v4_step600_ema.safetensors \
-  --embedding-grid /models/h3/h3_silu_temb_grid.safetensors \
-  --prompt-file examples/prompt.txt --image /inputs/first-frame.png \
-  --output-dir outputs/fl2va
-```
+两卡使用 `--gpus 2`。将下载和运行命令中的配置换为 `ref2va-pdd` 或 `ref2va-turbo`，即可运行对应样例。FL2VA/PDD 加 `--num-frames 124` 可先跑短片。[模型大小、已有权重与自定义输入 →](docs/setup.md)
 
-四卡改为 `--gpus 4`。Ref2VA PDD 选择 `--profile ref2va-pdd` 并提供对应主干及 PDD 权重；Ref2VA Turbo 选择 `--profile ref2va-turbo` 并提供 LightX2V Ref2VA 八步权重。
+## 运行优化
 
-模型目录、权重准备与路径复用方式见[安装说明](docs/setup.md)。
+- **DiT 常驻**：两卡 TP2，四卡 TP2×SP2；去噪后释放 DiT，为 VAE 解码腾出显存。
+- **限制临时张量**：FFN、RMSNorm、AdaLN、LoRA 增量分块，attention 后及时释放 Q/K/V。
+- **复用准备结果**：持久化 TP2 INT8 分片与 AdaLN 日程，按空间 tile 并行解码视频 VAE。
 
-## 优化内容
+相同两张卡上，Ref2VA PDD 常驻配置将总耗时从 **1052.08 秒降至 952.81 秒，减少 9.44%**。[完整实测 →](benchmarks/README.md)
 
-- **常驻去噪**：两卡 TP2，四卡 TP2×SP2；完成去噪后释放 DiT，为 VAE 解码腾出显存。
-- **降低临时张量峰值**：FFN、RMSNorm、AdaLN、LoRA 增量分块，及时释放 Q/K/V 和通信缓冲。
-- **复用准备结果**：持久化 TP2 INT8 分片及 AdaLN 日程，复用节点本地权重和模型组件。
-- **并行视频解码**：按空间 tile 分配 VAE 工作，同时保留原生音频解码。
+## 更多对照
 
-相同两卡、相同 Ref2VA PDD 输入，常驻优化配置将去噪从 **892.41 秒降至 838.13 秒**，框架总耗时从 **1052.08 秒降至 952.81 秒**。四卡去噪为 571.82 秒。[阶段数据](benchmarks/README.md)
-
-## 四框架 Base 对照
-
-Ref2VA、INT8 ConvRot 裁剪主干、SageAttention 2、768×1344、124 帧、20 次去噪前向。下表单位为秒。
-
-| 框架 | 两卡去噪 | 四卡去噪 |
-|---|---:|---:|
-| LightX2V | 417.30 | 353.87 |
-| SGLang | 425.18 | 317.62 |
-| Raylight | 594.54 | 362.62 |
-| vLLM-Omni | 约 590 | 约 401 |
-
-本仓库运行入口使用 LightX2V；其他框架的配置与结果收录于[对照数据](benchmarks/base-frameworks.json)。
-
-## Ref2VA Turbo 与 PDD
-
-两张 RTX 3090、768×1344、124 帧、八步：
-
-| 加速权重 | 主干 | 去噪 | 框架总耗时 |
-|---|---|---:|---:|
-| LightX2V Turbo | BF16 | 229.15 s | 376.15 s |
-| LightX2V Turbo | INT8 裁剪 | 191.14 s | 515.04 s |
-| PDD | BF16 | 226.92 s | 376.20 s |
-| PDD | INT8 裁剪 | 191.57 s | 495.03 s |
-
-[Turbo 成片](media/ref2va-turbo-int8-2gpu-5s.mp4) · [CSV](benchmarks/successful-runs.csv) · [JSON](benchmarks/successful-runs.json)
-
-[测试输入](benchmarks/inputs/)与[逐步计时记录](benchmarks/records/)随成片一同提供。
+[Ref2VA Turbo/PDD：BF16 与 INT8](benchmarks/README.md#5-second-adapter-runs) · [LightX2V / SGLang / Raylight / vLLM-Omni Base](benchmarks/README.md#base-framework-runs) · [测试输入](benchmarks/inputs/) · [逐步记录](benchmarks/records/)
 
 ## 上游项目
 
-[MiniMax H3](https://github.com/MiniMax-AI/MiniMax-H3)、[LightX2V](https://github.com/ModelTC/LightX2V)、[Larryvrh Turbo](https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora)、[Alibaba PAI PDD](https://huggingface.co/alibaba-pai/MiniMax-H3-Acc-LoRAs)、[VideoX-Fun](https://github.com/aigc-apps/VideoX-Fun)、[SageAttention](https://github.com/thu-ml/SageAttention)。
-
-Base 对照还使用了 [SGLang](https://github.com/sgl-project/sglang)、[Raylight](https://github.com/komikndr/raylight)、[vLLM-Omni](https://github.com/vllm-project/vllm-omni)。
-
-Rank-8 时间条件准备沿用 [Wan2GP](https://github.com/deepbeepmeep/Wan2GP) 的构造方法。
+[MiniMax H3](https://github.com/MiniMax-AI/MiniMax-H3)、[LightX2V](https://github.com/ModelTC/LightX2V)、[Larryvrh Turbo](https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora)、[Alibaba PAI PDD](https://huggingface.co/alibaba-pai/MiniMax-H3-Acc-LoRAs)、[VideoX-Fun](https://github.com/aigc-apps/VideoX-Fun)、[SageAttention](https://github.com/thu-ml/SageAttention)。Rank-8 时间条件准备沿用 [Wan2GP](https://github.com/deepbeepmeep/Wan2GP) 的构造方法。

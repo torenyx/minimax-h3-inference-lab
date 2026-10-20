@@ -1,6 +1,6 @@
 {
-  "model_dir": "/models/MiniMax-H3/FL2VA",
-  "pruned_checkpoint": "/models/FL2VA/pruned_int8_convrot.safetensors",
-  "adapter": "/models/minimax_h3_turbo_v4_step600_ema.safetensors",
-  "embedding_grid": "/models/h3_silu_temb_grid.safetensors"
+  "model_dir": "/models/h3/MiniMax-H3/FL2VA",
+  "pruned_checkpoint": "/models/h3/derived/FL2VA/pruned_int8_convrot.safetensors",
+  "adapter": "/models/h3/adapters/minimax_h3_turbo_v4_step600_ema.safetensors",
+  "cache_dir": "/models/h3/cache/fl2va-turbo"
 }

@@ -23,6 +23,7 @@ def rename(name):
         ("condition_proj", "context_embedder"),
         ("token_refiner.blocks.", "token_refiner.refiner_blocks."),
         ("final_layer.norm_final", "norm_out.norm"),
+        ("final_layer.norm.", "norm_out.norm."),
         ("final_layer.video_out", "proj_out"),
         ("final_layer.audio_out", "audio_proj_out"),
         (".attn.q_norm.", ".attn.norm_q."),

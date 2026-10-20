@@ -3,6 +3,9 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from runtime.checkpoint_names import normalize_final_norm
 
 source = Path(__file__).resolve().parents[1] / 'scripts/run.py'
 loader = importlib.util.spec_from_file_location('h3_launcher', source)
@@ -11,6 +14,13 @@ loader.loader.exec_module(launcher)
 
 
 class LaunchContract(unittest.TestCase):
+    def test_historical_final_norm_name_preserves_tensor(self):
+        value = object()
+        weights = normalize_final_norm({'final_layer.norm.weight': value})
+        self.assertEqual(set(weights), {'norm_out.norm.weight'})
+        self.assertIs(weights['norm_out.norm.weight'], value)
+        self.assertIs(normalize_final_norm(weights)['norm_out.norm.weight'], value)
+
     def arguments(self, profile, extra=()):
         return launcher.parser().parse_args(['--profile', profile, '--model-dir', 'model',
             '--pruned-checkpoint', 'pruned.safetensors', '--adapter', 'adapter.safetensors',

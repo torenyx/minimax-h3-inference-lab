@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MiniMax H3 · Video gallery</title>
+<style>
+  :root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#17231f;background:#f3f5f2;color-scheme:light}
+  *{box-sizing:border-box}body{margin:0}main{max-width:1180px;margin:auto;padding:48px 24px 72px}
+  a{color:#176747;text-underline-offset:3px}.eyebrow{font-size:12px;font-weight:750;letter-spacing:.15em;color:#47705d;text-transform:uppercase}
+  h1{font-size:clamp(32px,5vw,52px);line-height:1.06;letter-spacing:-.045em;margin:12px 0 16px}header p{max-width:750px;color:#57635d;line-height:1.65}
+  nav{display:flex;gap:20px;margin:24px 0 32px;font-size:14px}.toolbar{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:28px 0 20px}
+  label{display:flex;gap:8px;align-items:center;font-size:14px}select{font:inherit;padding:8px 28px 8px 12px;border:1px solid #cbd5ce;border-radius:7px;background:white;color:inherit}
+  #count{margin-left:auto;color:#627166;font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+  article{background:white;border:1px solid #d9e1da;border-radius:14px;overflow:hidden}video{display:block;width:100%;aspect-ratio:16/10;object-fit:contain;background:#17201b}
+  .body{padding:22px}.topline{display:flex;justify-content:space-between;align-items:center;gap:12px}.badge{font-size:12px;font-weight:650;background:#e6f0e9;color:#236142;padding:5px 9px;border-radius:20px;white-space:nowrap}
+  h2{font-size:21px;letter-spacing:-.025em;margin:0}.spec{font-size:13px;color:#69746d;margin:10px 0 20px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 20px}
+  dt{font-size:12px;color:#69746d;margin-bottom:4px}dd{font-size:25px;letter-spacing:-.025em;margin:0;font-variant-numeric:tabular-nums}.links{display:flex;flex-wrap:wrap;gap:16px;font-size:13px}
+  .note{font-size:13px;line-height:1.6;color:#657169;margin-top:28px}.error{padding:24px;background:#fff;border-radius:10px}
+  @media(max-width:720px){main{padding:30px 16px}.grid{grid-template-columns:1fr}#count{margin-left:0}nav{flex-wrap:wrap}}
+</style>
+<main>
+  <header>
+    <div class="eyebrow">MiniMax H3 / RTX 3090 24GB</div>
+    <h1>MiniMax H3 on RTX 3090</h1>
+    <p>Five completed clips from FL2VA Larry Turbo and Ref2VA PDD/Turbo. Compare two- and four-GPU outputs, with denoising and complete framework timing beside each video.</p>
+    <nav><a href="https://github.com/torenyx/minimax-h3-inference-lab">Repository</a><a href="https://github.com/torenyx/minimax-h3-inference-lab/blob/main/README.zh-CN.md">简体中文</a><a href="https://github.com/torenyx/minimax-h3-inference-lab/blob/main/benchmarks/README.md">Measurements</a><a href="../benchmarks/successful-runs.csv" download>Download CSV</a></nav>
+  </header>
+  <div class="toolbar">
+    <label>Task <select id="task"><option value="all">All tasks</option><option value="FL2VA">FL2VA</option><option value="REF2VA">Ref2VA</option></select></label>
+    <label>GPUs <select id="gpus"><option value="all">2 and 4 GPUs</option><option value="2">2 GPUs</option><option value="4">4 GPUs</option></select></label>
+    <span id="count" aria-live="polite"></span>
+  </div>
+  <section id="gallery" class="grid" aria-label="Generated videos"></section>
+  <p class="note">Framework total includes model loading, condition encoding, denoising, decoding, and saving. Weight conversion and cache preparation happen beforehand. Each 15-second two/four-GPU pair shares its prompt, reference and seed; the five-second Turbo clip uses its own recipe.</p>
+</main>
+<template id="card">
+  <article>
+    <video controls preload="none" playsinline></video>
+    <div class="body">
+      <div class="topline"><h2></h2><span class="badge"></span></div>
+      <p class="spec"></p>
+      <dl class="metrics"><div><dt>Denoising</dt><dd class="denoise"></dd></div><div><dt>Framework total</dt><dd class="total"></dd></div></dl>
+      <div class="links"><a class="prompt">Prompt</a><a class="record">Timing record</a><a class="storyboard">Storyboard</a><a class="clip">Open video ↗</a></div>
+    </div>
+  </article>
+</template>
+<script>
+  const task = document.querySelector('#task'), gpus = document.querySelector('#gpus');
+  const gallery = document.querySelector('#gallery'), count = document.querySelector('#count');
+  const seconds = value => `${value.toFixed(2)} s`;
+  const title = row => row.task_family === 'FL2VA' ? 'FL2VA · Larry Turbo' : row.adapter.includes('PDD') ? 'Ref2VA · PDD' : 'Ref2VA · Turbo';
+  function render(rows) {
+    gallery.querySelectorAll('video').forEach(video => video.pause());
+    gallery.replaceChildren();
+    const shown = rows.filter(row => (task.value === 'all' || row.task_family === task.value) && (gpus.value === 'all' || String(row.gpu_count) === gpus.value));
+    count.textContent = `${shown.length} ${shown.length === 1 ? 'clip' : 'clips'}`;
+    for (const row of shown) {
+      const card = document.querySelector('#card').content.cloneNode(true);
+      const video = card.querySelector('video');
+      video.src = '../' + row.video; video.poster = '../' + row.video.replace('.mp4', '-poster.jpg');
+      video.setAttribute('aria-label', `${title(row)}, ${row.gpu_count} GPUs`);
+      card.querySelector('h2').textContent = title(row);
+      card.querySelector('.badge').textContent = `${row.gpu_count} GPUs · ${row.parallel}`;
+      card.querySelector('.spec').textContent = `${row.width} × ${row.height} · ${row.frames} frames · ${row.fps} fps · ${row.steps} steps · native stereo audio`;
+      card.querySelector('.denoise').textContent = seconds(row.denoise_seconds);
+      card.querySelector('.total').textContent = seconds(row.framework_total_seconds);
+      card.querySelector('.prompt').href = '../' + row.prompt;
+      card.querySelector('.record').href = '../' + row.record;
+      card.querySelector('.storyboard').href = '../' + row.video.replace('.mp4', '.png');
+      card.querySelector('.clip').href = '../' + row.video;
+      gallery.append(card);
+    }
+  }
+  fetch('../benchmarks/successful-runs.json').then(response => {
+    if (!response.ok) throw new Error('Could not load benchmark data.');
+    return response.json();
+  }).then(rows => {
+    rows = rows.filter(row => row.video).sort((a, b) => b.gpu_count - a.gpu_count || a.task_family.localeCompare(b.task_family));
+    render(rows);
+    task.addEventListener('change', () => render(rows));
+    gpus.addEventListener('change', () => render(rows));
+  }).catch(error => {
+    const message = document.createElement('p'); message.className = 'error'; message.textContent = error.message;
+    gallery.replaceChildren(message); count.textContent = 'Data unavailable';
+  });
+</script>
+</html>

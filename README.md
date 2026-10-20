@@ -1,97 +1,70 @@
 # MiniMax H3 on 24GB GPUs
 
-[简体中文](README.zh-CN.md) · [Benchmarks](benchmarks/README.md) · [Setup](docs/setup.md)
+[简体中文](README.zh-CN.md) · [Video gallery](https://torenyx.github.io/minimax-h3-inference-lab/docs/gallery.html) · [Measurements](benchmarks/README.md) · [Setup](docs/setup.md)
 
-Run MiniMax H3 with two or four RTX 3090s. This repository brings together FL2VA Larry Turbo, Ref2VA Turbo/PDD, multi-GPU launchers, memory optimizations, and measured video outputs.
+Generate video and native stereo audio with **two or four RTX 3090s**. Three LightX2V profiles cover first-frame generation with Larry Turbo and reference-conditioned generation with PDD or Turbo.
 
-**15-second video with native stereo audio:** FL2VA six-step generation takes **9:29 including loading** on four cards; Ref2VA PDD eight-step generation takes **11:19**.
+## Choose a profile
 
-## Results
+| Your input | Profile | Included sample |
+|---|---|---|
+| First frame | `fl2va-turbo` · Larry v4, 6 steps | 15 s · 1344×768 |
+| Reference image | `ref2va-pdd` · PDD, 8 steps | 15 s · 768×1344 |
+| Reference image | `ref2va-turbo` · LightX2V Turbo, 8 steps | 5 s · 768×1344 |
 
-INT8 ConvRot pruned backbone, SageAttention 2, 362 frames at 24 fps. DiT weights stay on the GPUs during denoising.
+## Watch the results
 
-| Task | GPUs | Steps | Denoising | Framework total | Video |
-|---|---:|---:|---:|---:|---|
-| FL2VA · Larry Turbo | 2 | 6 | 656.49 s | 806.85 s | [Play](media/fl2va-turbo-2gpu.mp4) |
-| FL2VA · Larry Turbo | 4 | 6 | **450.77 s** | **568.95 s** | [Play](media/fl2va-turbo-4gpu.mp4) |
-| Ref2VA · PDD | 2 | 8 | 838.13 s | 952.81 s | [Play](media/ref2va-pdd-2gpu.mp4) |
-| Ref2VA · PDD | 4 | 8 | **571.82 s** | **678.55 s** | [Play](media/ref2va-pdd-4gpu.mp4) |
+<table>
+<tr>
+<td width="50%" valign="top">
+<h3>FL2VA · Larry Turbo</h3>
+<p align="center"><a href="media/fl2va-turbo-4gpu.mp4"><img src="media/fl2va-turbo-4gpu-poster.jpg" alt="FL2VA four-GPU sample — click to play" height="270"></a></p>
+<p>15 s · 1344×768 · 6 steps<br><b>4 GPUs: 9:29 total · 450.77 s denoising</b><br>2 GPUs: 13:27 total · 656.49 s denoising</p>
+<p><a href="media/fl2va-turbo-4gpu.mp4">Play four-GPU clip</a> · <a href="media/fl2va-turbo-2gpu.mp4">Play two-GPU clip</a></p>
+</td>
+<td width="50%" valign="top">
+<h3>Ref2VA · PDD</h3>
+<p align="center"><a href="media/ref2va-pdd-4gpu.mp4"><img src="media/ref2va-pdd-4gpu-poster.jpg" alt="Ref2VA four-GPU sample — click to play" height="270"></a></p>
+<p>15 s · 768×1344 · 8 steps<br><b>4 GPUs: 11:19 total · 571.82 s denoising</b><br>2 GPUs: 15:53 total · 838.13 s denoising</p>
+<p><a href="media/ref2va-pdd-4gpu.mp4">Play four-GPU clip</a> · <a href="media/ref2va-pdd-2gpu.mp4">Play two-GPU clip</a></p>
+</td>
+</tr>
+</table>
 
-FL2VA: 1344×768, first-frame conditioning. Ref2VA: 768×1344, image-reference conditioning. Each two/four-GPU pair uses the same input and seed. Framework total includes loading, encoding, denoising, decoding, and saving; weights and caches are prepared beforehand.
+RTX 3090 24GB, pruned INT8 ConvRot, SageAttention 2, 362 frames at 24 fps. Each two/four-GPU pair uses the same input and seed. Total includes model loading, encoding, denoising, decoding, and saving; converted weights and caches are prepared beforehand.
 
-[![FL2VA four-GPU output](media/fl2va-turbo-4gpu.png)](media/fl2va-turbo-4gpu.mp4)
+[All five clips](https://torenyx.github.io/minimax-h3-inference-lab/docs/gallery.html) · [Stage timings and inputs](benchmarks/README.md) · [CSV](benchmarks/successful-runs.csv)
 
-[![Ref2VA four-GPU output](media/ref2va-pdd-4gpu.png)](media/ref2va-pdd-4gpu.mp4)
+## Run the included sample
 
-## Quick start
-
-Linux, CUDA, and two or four NVIDIA GPUs. The measured environment uses PyTorch 2.5.1 + CUDA 12.4 and SageAttention 2.2.0.
+Linux, CUDA toolkit, Python 3.10+, and `aria2c`. The installer uses PyTorch 2.5.1 / CUDA 12.4 and SageAttention 2.2.0.
 
 ```bash
 git clone https://github.com/torenyx/minimax-h3-inference-lab.git
 cd minimax-h3-inference-lab
 bash scripts/setup.sh
 source .venv/bin/activate
+
+python scripts/download_models.py --profile fl2va-turbo --model-root /models/h3
+python scripts/sample.py --profile fl2va-turbo --model-root /models/h3 --gpus 4
 ```
 
-FL2VA Larry Turbo, two GPUs:
+The downloader selects pinned model revisions, resumes transfers with 16 connections per file, and writes reusable path settings. The sample command converts the checkpoint on first use and generates `outputs/fl2va-turbo-4gpu/trial.mp4` from the included prompt and first frame.
 
-```bash
-python scripts/run.py \
-  --profile fl2va-turbo --gpus 2 \
-  --model-dir /models/h3/fl2va \
-  --pruned-checkpoint /models/h3/fl2va/pruned_int8_convrot.safetensors \
-  --adapter /models/h3/larry-v4_step600_ema.safetensors \
-  --embedding-grid /models/h3/h3_silu_temb_grid.safetensors \
-  --prompt-file examples/prompt.txt --image /inputs/first-frame.png \
-  --output-dir outputs/fl2va
-```
+Use `--gpus 2` for two cards. Download and run `ref2va-pdd` or `ref2va-turbo` the same way. Add `--num-frames 124` for a short FL2VA/PDD run. [Model sizes, existing weights, and your own inputs →](docs/setup.md)
 
-Use `--gpus 4` for TP2×SP2. Ref2VA PDD uses `--profile ref2va-pdd` with the Ref2VA backbone and its PDD adapter; Ref2VA Turbo uses `--profile ref2va-turbo` with the matching LightX2V eight-step adapter.
+## Runtime changes
 
-Model layout, weight preparation, and reusable path settings: [setup guide](docs/setup.md).
+- **Resident DiT:** TP2 on two cards, TP2×SP2 on four; release DiT before VAE decoding.
+- **Bounded temporaries:** chunk FFN, RMSNorm, AdaLN, and LoRA updates; release Q/K/V buffers after attention.
+- **Reusable preparation:** persist TP2 INT8 shards and AdaLN schedules; decode video VAE tiles across GPUs.
 
-## What changes the runtime
+On the same two cards, the Ref2VA PDD resident recipe reduces total time from **1052.08 to 952.81 seconds (−9.44%)**. [Full measurements →](benchmarks/README.md)
 
-- **Resident denoising.** TP2 on two cards; TP2×SP2 on four. Release DiT after sampling to make room for the VAEs.
-- **Smaller temporary tensors.** Chunk FFN, RMSNorm, AdaLN, and LoRA updates; release Q/K/V and communication buffers after use.
-- **Prepared loading.** Persist TP2 INT8 shards and AdaLN schedules, then reuse node-local weights and components.
-- **Parallel decoding.** Spatially tile video-VAE work across GPUs and decode native audio separately.
+## More measurements
 
-For Ref2VA PDD on the same two cards, the resident configuration reduces denoising from **892.41 to 838.13 seconds** and framework total from **1052.08 to 952.81 seconds**. Four-card denoising takes 571.82 seconds. See [measurements](benchmarks/README.md).
-
-## Base across four frameworks
-
-Ref2VA, pruned INT8 ConvRot, SageAttention 2, 768×1344, 124 frames, 20 denoiser evaluations. Values below are denoising seconds.
-
-| Framework | 2 GPUs | 4 GPUs |
-|---|---:|---:|
-| LightX2V | 417.30 | 353.87 |
-| SGLang | 425.18 | 317.62 |
-| Raylight | 594.54 | 362.62 |
-| vLLM-Omni | ~590 | ~401 |
-
-Launch code in this release targets LightX2V. The framework comparison data records each backend's parallel and residency configuration in [JSON](benchmarks/base-frameworks.json).
-
-## More configurations
-
-Ref2VA eight-step runs also cover full BF16 and pruned INT8 backbones:
-
-| Adapter | Backbone | Denoising | Framework total |
-|---|---|---:|---:|
-| LightX2V Turbo | BF16 | 229.15 s | 376.15 s |
-| LightX2V Turbo | INT8 pruned | 191.14 s | 515.04 s |
-| PDD | BF16 | 226.92 s | 376.20 s |
-| PDD | INT8 pruned | 191.57 s | 495.03 s |
-
-Two RTX 3090s, 768×1344, 124 frames. [Turbo video](media/ref2va-turbo-int8-2gpu-5s.mp4) · [CSV](benchmarks/successful-runs.csv) · [JSON](benchmarks/successful-runs.json)
-
-The [benchmark inputs](benchmarks/inputs/) and [per-step records](benchmarks/records/) accompany the clips.
+[Ref2VA Turbo/PDD, BF16 vs INT8](benchmarks/README.md#5-second-adapter-runs) · [LightX2V / SGLang / Raylight / vLLM-Omni Base](benchmarks/README.md#base-framework-runs) · [Inputs](benchmarks/inputs/) · [Per-step records](benchmarks/records/)
 
 ## Built on
 
-[MiniMax H3](https://github.com/MiniMax-AI/MiniMax-H3), [LightX2V](https://github.com/ModelTC/LightX2V), [Larryvrh Turbo](https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora), [Alibaba PAI PDD](https://huggingface.co/alibaba-pai/MiniMax-H3-Acc-LoRAs), [VideoX-Fun](https://github.com/aigc-apps/VideoX-Fun), and [SageAttention](https://github.com/thu-ml/SageAttention).
-
-Base measurements include [SGLang](https://github.com/sgl-project/sglang), [Raylight](https://github.com/komikndr/raylight), and [vLLM-Omni](https://github.com/vllm-project/vllm-omni).
-
-Rank-8 time-conditioning preparation follows [Wan2GP](https://github.com/deepbeepmeep/Wan2GP).
+[MiniMax H3](https://github.com/MiniMax-AI/MiniMax-H3), [LightX2V](https://github.com/ModelTC/LightX2V), [Larryvrh Turbo](https://huggingface.co/larryvrh/MiniMax-H3-Turbo-Lora), [Alibaba PAI PDD](https://huggingface.co/alibaba-pai/MiniMax-H3-Acc-LoRAs), [VideoX-Fun](https://github.com/aigc-apps/VideoX-Fun), and [SageAttention](https://github.com/thu-ml/SageAttention). Rank-8 time-conditioning preparation follows [Wan2GP](https://github.com/deepbeepmeep/Wan2GP).
