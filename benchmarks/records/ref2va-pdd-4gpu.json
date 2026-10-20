@@ -1,0 +1,40 @@
+{
+  "id": "ref2va-pdd-4gpu",
+  "status": "passed",
+  "denoiser_forwards": 8,
+  "step_seconds": [
+    88.186025,
+    67.855901,
+    66.505356,
+    68.944077,
+    69.76658,
+    70.914675,
+    70.389935,
+    69.25332
+  ],
+  "timings": {
+    "Load models": 43.205246,
+    "Run Text Encoder": 7.591669,
+    "Run VAE Encoder": 5.239074,
+    "Run Input Encoder": 12.894425,
+    "Prepare DiT": 0.860733,
+    "step_pre": 0.008081,
+    "🚀 infer_main": 69.24139,
+    "step_post": 0.000931,
+    "Run Dit every step": 69.25332,
+    "Offload DiT": 2.130756,
+    "Run Video VAE Decoder": 38.341064,
+    "Run Audio VAE Decoder": 1.27855,
+    "Run VAE Decoder": 39.621377,
+    "Save Audio-Video Output": 4.97854,
+    "Run DiT": 622.219719,
+    "RUN pipeline": 635.115091,
+    "Total Cost": 678.552139
+  },
+  "width": 768,
+  "height": 1344,
+  "actual_frames": 362,
+  "fps": "24",
+  "audio_sample_rate": 32000,
+  "audio_duration_seconds": 15.104
+}

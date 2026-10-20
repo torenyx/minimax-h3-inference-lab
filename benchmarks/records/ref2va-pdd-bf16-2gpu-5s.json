@@ -1,0 +1,40 @@
+{
+  "id": "ref2va-pdd-bf16-2gpu-5s",
+  "status": "passed",
+  "denoiser_forwards": 8,
+  "step_seconds": [
+    29.81338,
+    28.174943,
+    28.13248,
+    28.126222,
+    28.148181,
+    28.134521,
+    28.172743,
+    28.222305
+  ],
+  "timings": {
+    "Load models": 102.078055,
+    "Run Text Encoder": 12.63076,
+    "Run VAE Encoder": 5.886581,
+    "Run Input Encoder": 18.557602,
+    "Prepare DiT": 0.044157,
+    "step_pre": 0.001941,
+    "🚀 infer_main": 28.21548,
+    "step_post": 0.002416,
+    "Run Dit every step": 28.222305,
+    "Offload DiT": 0.283014,
+    "Run Video VAE Decoder": 23.557335,
+    "Run Audio VAE Decoder": 1.47854,
+    "Run VAE Decoder": 25.037402,
+    "Save Audio-Video Output": 2.119946,
+    "Run DiT": 255.281596,
+    "RUN pipeline": 273.840477,
+    "Total Cost": 376.202485
+  },
+  "width": 768,
+  "height": 1344,
+  "actual_frames": 124,
+  "fps": "24",
+  "audio_sample_rate": 32000,
+  "audio_duration_seconds": 5.184
+}

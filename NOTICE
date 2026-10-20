@@ -1,0 +1,16 @@
+MiniMax H3 Inference Lab
+Copyright 2026 torenyx
+
+This repository contains adaptations of LightX2V and VideoX-Fun code.
+Their copyright and license notices are retained in the source and licenses/.
+
+LightX2V: https://github.com/ModelTC/LightX2V
+VideoX-Fun: https://github.com/aigc-apps/VideoX-Fun
+
+Rank-8 time-conditioning preparation follows the construction used in Wan2GP:
+https://github.com/deepbeepmeep/Wan2GP
+
+MiniMax H3, Larryvrh Turbo and Alibaba PAI PDD model weights are downloaded
+from their publishers and retain their respective model licenses.
+
+The media/ directory contains generated benchmark examples.

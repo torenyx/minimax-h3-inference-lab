@@ -1,0 +1,2 @@
+-r requirements-runtime.txt
+# Install CUDA-specific torch and SageAttention with scripts/setup.sh.

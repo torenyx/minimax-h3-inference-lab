@@ -1,0 +1,27 @@
+subject_definitions:
+<Subject 1> is the adult woman in <Picture 1>, with red bangs, a long red braid, golden eyes with concentric rings, a white collared shirt, a black necktie, and black trousers. The reference defines her identity, costume, proportions, and two-dimensional anime drawing style.
+
+summary:
+[reference generation] A continuous approximately five-second portrait shot shows <Subject 1> in a quiet sunlit office. She lowers the hand resting near her chin, gently turns her head, and looks back toward the camera with a restrained smile as the camera slowly approaches.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - her facial identity, red hair and braid, golden ring-patterned eyes, costume, adult proportions, and anime style are retained throughout. Her gesture evolves naturally. The office is a newly generated environment; the reference's plain white background is not a location or composition requirement.
+
+detailed_description:
+The video follows the reference's two-dimensional Japanese anime aesthetic, with clean contour lines, controlled flat colors, and cel-shaded shadows. The drawing remains consistent during movement, with soft afternoon illumination expressed through coherent shaded shapes rather than photographic skin texture.
+
+[Shot 1] A single uninterrupted portrait shot lasts approximately 5.17 seconds. <Subject 1> stands near the center of a quiet office, framed from above the crown of her head to her knees. Her face is unobstructed. Her red bangs, golden ring-patterned eyes, white shirt, black tie, and black trousers clearly match the reference. The red braid extends behind her shoulder. A window at frame left casts gentle afternoon light across her face and shirt. An understated desk and softly rendered office furnishings occupy the background without crossing her silhouette. The setting has warm neutral colors and subdued detail, keeping the woman visually prominent.
+
+At the opening, her right hand rests lightly near her chin, following the gesture shown in the reference. Her shoulders are relaxed, and her expression is calm and composed. During roughly the first two seconds, she slowly lowers that hand toward her side. The elbow extends naturally, the fingers remain relaxed, and the hand moves clear of her face without passing through her chin, tie, or shirt. Small folds in the sleeve shift with the motion. Her other arm maintains a comfortable resting position.
+
+During the middle of the shot, she turns her head slightly to her left, no more than a modest three-quarter angle, while her torso remains largely still. Her gaze briefly follows that turn. Her bangs and braid respond with a small delayed sway, then begin to settle. Her facial proportions, eye color, and hairstyle remain consistent as the viewing angle changes.
+
+Over the final two seconds, she gently turns her head and eyes back toward the camera. Her closed mouth develops a subtle, restrained smile. She holds the relaxed final pose as the braid settles. The camera makes a slow, small forward dolly throughout, finishing in a slightly tighter composition while keeping the full head and lowered hand visible. The horizon stays level and the focus remains on her face. There are no cuts, transitions, additional characters, dialogue, captions, logos, or readable scene text.
+
+Quiet office room tone continues underneath the entire action. A faint cloth rustle accompanies the arm lowering and then fades. Distant city ambience is softly audible through the window. There are no footsteps because she remains standing in place.
+
+overall_soundscape:
+Low, steady indoor office ambience, faint distant city sounds, and a brief soft sleeve rustle synchronized with the arm movement. No speech or singing.
+
+non_diegetic_music:
+N/A

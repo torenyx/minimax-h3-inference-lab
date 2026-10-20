@@ -1,0 +1,40 @@
+{
+  "id": "ref2va-turbo-int8-2gpu-5s",
+  "status": "passed",
+  "denoiser_forwards": 8,
+  "step_seconds": [
+    30.466532,
+    23.096022,
+    22.574708,
+    23.243729,
+    22.892227,
+    23.724988,
+    22.629265,
+    22.515668
+  ],
+  "timings": {
+    "Load models": 258.874965,
+    "Run Text Encoder": 21.342762,
+    "Run VAE Encoder": 7.057997,
+    "Run Input Encoder": 28.525439,
+    "Prepare DiT": 0.842925,
+    "step_pre": 0.001373,
+    "🚀 infer_main": 22.512278,
+    "step_post": 0.000525,
+    "Run Dit every step": 22.515668,
+    "Offload DiT": 1.554421,
+    "Run Video VAE Decoder": 25.562427,
+    "Run Audio VAE Decoder": 1.189541,
+    "Run VAE Decoder": 26.753552,
+    "Save Audio-Video Output": 2.021531,
+    "Run DiT": 227.266305,
+    "RUN pipeline": 255.792872,
+    "Total Cost": 515.036449
+  },
+  "width": 768,
+  "height": 1344,
+  "actual_frames": 124,
+  "fps": "24",
+  "audio_sample_rate": 32000,
+  "audio_duration_seconds": 5.184
+}

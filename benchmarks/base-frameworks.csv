@@ -1,0 +1,9 @@
+framework,gpu_count,gpu_model,task,width,height,frames,fps,steps,seed,base_precision,parallel,denoise_seconds,framework_total_seconds,denoise_timing,conditioning_reused
+LightX2V,2,NVIDIA GeForce RTX 3090,ref2av,768,1344,124,24,20,20261013,INT8 ConvRot pruned,TP2+U1,417.302,524.199,recorded,False
+LightX2V,4,NVIDIA GeForce RTX 3090,ref2av,768,1344,124,24,20,20261013,INT8 ConvRot pruned,TP2+U2,353.869,452.059,recorded,False
+SGLang,2,NVIDIA GeForce RTX 3090,ref2av,768,1344,124,24,20,20261013,INT8 ConvRot pruned,TP2+U1,425.175,607.927,recorded,False
+SGLang,4,NVIDIA GeForce RTX 3090,ref2av,768,1344,124,24,20,20261013,INT8 ConvRot pruned,TP2+U2,317.624,442.757,recorded,False
+Raylight,2,NVIDIA GeForce RTX 3090,ref2av,768,1344,124,24,20,20261013,INT8 ConvRot pruned,FSDP+U2,594.543,794.082,recorded,True
+Raylight,4,NVIDIA GeForce RTX 3090,ref2av,768,1344,124,24,20,20261013,INT8 ConvRot pruned,FSDP+U4,362.624,650.385,recorded,False
+vLLM-Omni,2,NVIDIA GeForce RTX 3090,ref2av,768,1344,124,24,20,20261013,INT8 ConvRot pruned,TP2+U1,590,820.478,progress-bar approximation,False
+vLLM-Omni,4,NVIDIA GeForce RTX 3090,ref2av,768,1344,124,24,20,20261013,INT8 ConvRot pruned,TP2+U2,401,612.364,progress-bar approximation,False

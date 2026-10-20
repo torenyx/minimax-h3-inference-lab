@@ -1,0 +1,40 @@
+{
+  "id": "ref2va-pdd-int8-2gpu-5s",
+  "status": "passed",
+  "denoiser_forwards": 8,
+  "step_seconds": [
+    32.494527,
+    22.765638,
+    22.442667,
+    22.916393,
+    22.638429,
+    23.440551,
+    22.738999,
+    22.128724
+  ],
+  "timings": {
+    "Load models": 247.167224,
+    "Run Text Encoder": 21.342343,
+    "Run VAE Encoder": 4.669083,
+    "Run Input Encoder": 26.135506,
+    "Prepare DiT": 0.952746,
+    "step_pre": 0.003937,
+    "🚀 infer_main": 22.119649,
+    "step_post": 0.001649,
+    "Run Dit every step": 22.128724,
+    "Offload DiT": 1.5809,
+    "Run Video VAE Decoder": 23.277164,
+    "Run Audio VAE Decoder": 1.801855,
+    "Run VAE Decoder": 25.080402,
+    "Save Audio-Video Output": 1.603795,
+    "Run DiT": 221.234379,
+    "RUN pipeline": 247.371113,
+    "Total Cost": 495.030056
+  },
+  "width": 768,
+  "height": 1344,
+  "actual_frames": 124,
+  "fps": "24",
+  "audio_sample_rate": 32000,
+  "audio_duration_seconds": 5.184
+}

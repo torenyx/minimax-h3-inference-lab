@@ -1,0 +1,63 @@
+{
+  "model_cls": "minimax_h3",
+  "model_variant": "ref2av",
+  "infer_steps": 20,
+  "num_frames": 124,
+  "size": [
+    1344,
+    768
+  ],
+  "fps": 24,
+  "enable_cfg": false,
+  "cpu_offload": true,
+  "offload_granularity": "model",
+  "text_encoder_cpu_offload": true,
+  "text_encoder_tensor_parallel": true,
+  "vae_cpu_offload": true,
+  "vae_decode_parallel": true,
+  "use_adaln_cache": true,
+  "dit_quantized": true,
+  "dit_quant_scheme": "int8-convrot",
+  "attn_type": "sage_attn2",
+  "rms_type": "torch_native",
+  "rope_type": "minimax_h3_triton_rope",
+  "feature_caching": "NoCaching",
+  "use_compile": false,
+  "video_flow_shift": 12.0,
+  "audio_flow_shift": 3.0,
+  "audio_sampling_rate": 32000,
+  "parallel": {
+    "seq_p_size": 1,
+    "seq_p_attn_type": "ulysses",
+    "tensor_p_size": 2
+  },
+  "hidden_size": 5376,
+  "num_layers": 50,
+  "ffn_dim": 14336,
+  "num_attention_heads": 56,
+  "attention_head_dim": 128,
+  "in_channels": 24,
+  "audio_in_channels": 32,
+  "num_refiner_layers": 2,
+  "freq_dim": 256,
+  "norm_eps": 1e-05,
+  "qk_norm_eps": 1e-05,
+  "final_norm_eps": 1e-05,
+  "patch_size": [
+    1,
+    2,
+    2
+  ],
+  "local_files_only": true,
+  "warmup": false,
+  "video_codec_options": {
+    "preset": "ultrafast",
+    "crf": "18"
+  },
+  "reference_image_resize_mode": "match",
+  "tensor_parallel": true,
+  "seq_parallel": false,
+  "refiner_attn_type": "torch_sdpa",
+  "text_encoder_offload_granularity": "block",
+  "text_encoder_release_block_offload_buffers": true
+}

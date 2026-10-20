@@ -1,0 +1,29 @@
+subject_definitions:
+<Subject 1> is the adult woman shown in <Picture 1>. She has red hair arranged in a braid, golden eyes, a white shirt, black necktie, black trousers, and the same facial identity, body proportions, clothing design, and clean two-dimensional anime appearance established by <Picture 1>. Her demeanor is calm, gracious, perceptive, and quietly authoritative, with a subtle underlying quality that feels slightly unsettling.
+
+summary:
+[reference generation] <Subject 1>, defined from <Picture 1>, appears throughout an approximately 15-second single-shot portrait set in a quiet late-afternoon office. Her appearance and anime design remain fully consistent with the reference while the office environment, body movement, camera movement, and spoken performance are newly generated. She lowers one hand from near her chin, briefly looks toward the window, returns her attention to the viewer, takes one measured step closer, and softly addresses the viewer in Japanese while maintaining a composed and quietly commanding presence.
+
+retention_analysis:
+<Subject 1> (appears throughout [Shot 1]): fully_preserved - preserve the facial identity, red hair and braid, golden eyes, white shirt, black necktie, black trousers, body proportions, and clean two-dimensional anime design established by <Picture 1>. Her defining calm, gracious, perceptive, and quietly authoritative demeanor remains consistent. The office setting, lighting behavior, body actions, camera movement, facial micro-expressions, dialogue delivery, and environmental sound are newly generated around the preserved subject.
+
+detailed_description:
+The target video is rendered in a clean two-dimensional anime style consistent with <Picture 1>, with restrained character animation, stable facial features, and soft late-afternoon lighting. The visual tone is quiet and elegant, with a subtle psychological tension beneath <Subject 1>'s otherwise warm and composed manner.
+
+[Shot 1] A single uninterrupted medium-full shot frames <Subject 1> from head to approximately the knees near the center of a quiet office. Her face remains unobstructed and visually consistent with <Picture 1>. Soft late-afternoon light enters from a nearby window and falls gently across one side of her face, red hair, white shirt, and black necktie. The background contains understated office furnishings kept visually separate from her silhouette. The camera begins a subtle, slow push-in and continues this gradual movement throughout the shot.
+
+At the beginning, <Subject 1> stands with one hand resting lightly near her chin and looks directly toward the viewer. Her posture is upright but relaxed, and her expression is patient and almost welcoming. Her golden eyes remain steady, with only subtle natural blinking and minimal facial movement.
+
+From approximately 00:03 to 00:06, she lowers the hand from her chin in one deliberate, unhurried motion. Her shoulders remain relaxed and level. A faint fabric rustle accompanies the movement, with only a slight shift in her sleeve and shirt fabric. At approximately 00:06, she briefly turns her eyes and head slightly toward the office window, holding the glance for a short moment before calmly returning her gaze to the viewer.
+
+From approximately 00:08 to 00:11, <Subject 1> takes one small, measured step toward the camera. Her posture remains elegant and controlled. A soft footstep and quiet clothing movement accompany the step as her braid, shirt, necktie, and trousers respond with restrained secondary motion, without exaggerated swaying. As she settles into the closer position, she tilts her head very slightly, conveying the impression that she already understands what the viewer is thinking.
+
+From approximately 00:11 to 00:13, she maintains steady eye contact. A faint and gentle smile forms while her gaze remains calm and difficult to interpret. The adult woman (S1), speaking in a warm, quiet, controlled Japanese voice, says softly: <d>[Japanese]いい子ですね。</d> Her mouth movement remains synchronized with the spoken line, and her delivery is measured, intimate, and understated rather than theatrical.
+
+From approximately 00:13 through the final frame, <Subject 1> continues to hold the viewer's gaze and restrained smile without making any large gesture. Her face remains in focus as the slow camera push-in concludes. The shot contains no cuts, sudden movements, exaggerated expressions, additional speakers, or foreground objects crossing her face or body silhouette.
+
+overall_soundscape:
+Soft indoor office ambience continues throughout, with faint distant city noise filtering in from outside. A subtle fabric rustle accompanies the hand lowering at approximately 00:03-00:06. A quiet clothing movement and soft footstep accompany her measured step at approximately 00:08-00:11. Keep the environment subdued so the spoken line stays clear and centered.
+
+non_diegetic_music:
+N/A

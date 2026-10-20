@@ -1,0 +1,72 @@
+{
+  "id": "fl2va-turbo-2gpu",
+  "status": "passed",
+  "denoiser_forwards": 6,
+  "step_seconds": [
+    133.201677,
+    104.209288,
+    103.77687,
+    104.05675,
+    107.956444,
+    103.284482
+  ],
+  "timings": {
+    "Load models": 50.304377,
+    "Run Text Encoder": 10.542687,
+    "Run VAE Encoder": 7.934381,
+    "Run Input Encoder": 18.645735,
+    "Prepare DiT": 0.885702,
+    "step_pre": 0.063997,
+    "🚀 infer_main": 103.216429,
+    "step_post": 0.001058,
+    "Run Dit every step": 103.284482,
+    "Offload DiT": 1.475664,
+    "Run Video VAE Decoder": 67.136157,
+    "Run Audio VAE Decoder": 1.563239,
+    "Run VAE Decoder": 68.70133,
+    "Save Audio-Video Output": 4.824992,
+    "Run DiT": 737.559033,
+    "RUN pipeline": 756.205941,
+    "Total Cost": 806.85031
+  },
+  "video_probe": {
+    "width": 1344,
+    "height": 768,
+    "fps": "24",
+    "audio_streams": 1,
+    "actual_frames": 362
+  },
+  "lora_alpha": 64.0,
+  "lora_strength": 1.0,
+  "lora_scale_verified": true,
+  "ff_chunk_validation": [
+    {
+      "rank": "0",
+      "rows": 16384,
+      "chunk_tokens": 8192,
+      "relative_l2_limit": 0.01,
+      "cosine_minimum": 0.9999,
+      "passed": true,
+      "equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "reference_max_abs": 36096.0,
+      "relative_l2": 0.0,
+      "cosine": 0.9999998211860657
+    },
+    {
+      "rank": "1",
+      "rows": 16384,
+      "chunk_tokens": 8192,
+      "relative_l2_limit": 0.01,
+      "cosine_minimum": 0.9999,
+      "passed": true,
+      "equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "reference_max_abs": 36096.0,
+      "relative_l2": 0.0,
+      "cosine": 0.9999998211860657
+    }
+  ]
+}

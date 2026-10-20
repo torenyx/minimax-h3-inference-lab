@@ -1,0 +1,31 @@
+--- a/lightx2v/models/networks/minimax_h3/infer/fused_qkv.py
++++ b/lightx2v/models/networks/minimax_h3/infer/fused_qkv.py
+@@ -65,9 +65,16 @@
+                 weight = tl.load(kw + d, d < DIM, other=0).to(tl.float32)
+                 eps = K_EPS
+             # Preserve the intermediate norm output cast without a memory roundtrip.
+-            y = (xf * tl.rsqrt(tl.sum(xf * xf, 0) / DIM + eps) * weight).to(x.dtype).to(tl.float32)
++            inv_rms = tl.rsqrt(tl.sum(xf * xf, 0) / DIM + eps)
++            y = (xf * inv_rms * weight).to(x.dtype).to(tl.float32)
+             pair = tl.where(d < ROTARY, tl.where(d < ROTARY // 2, d + ROTARY // 2, d - ROTARY // 2), d)
+-            paired = tl.gather(y, pair, axis=0)
++            # Triton 3.0 has no tl.gather; reload the paired lanes directly.
++            pair_x = tl.load(input_ptr + pair, pair < DIM, other=0).to(tl.float32)
++            if component == 0:
++                pair_weight = tl.load(qw + pair, pair < DIM, other=0).to(tl.float32)
++            else:
++                pair_weight = tl.load(kw + pair, pair < DIM, other=0).to(tl.float32)
++            paired = (pair_x * inv_rms * pair_weight).to(x.dtype).to(tl.float32)
+             c = tl.load(cos + token * COS_STRIDE + d, d < ROTARY, other=0)
+             s = tl.load(sin + token * SIN_STRIDE + d, d < ROTARY, other=0)
+             a = y * c.to(tl.float32)
+--- a/lightx2v/models/networks/minimax_h3/infer/transformer_infer.py
++++ b/lightx2v/models/networks/minimax_h3/infer/transformer_infer.py
+@@ -157,6 +157,7 @@
+             )
+             if aux_out is not None:
+                 out = torch.cat((aux_out, out), dim=0)
++        del q, k, v
+         return weights.to_out.apply(out.to(self.infer_dtype))
+ 
+     @staticmethod

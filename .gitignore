@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.deps/
+venv/
+outputs/
+models/
+cache/
+*.log
+*.pt
+*.pth
+*.safetensors
+paths.local.json

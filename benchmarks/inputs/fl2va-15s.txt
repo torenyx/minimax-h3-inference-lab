@@ -1,0 +1,21 @@
+subject_definitions:
+<Subject 1> is Makima, the red-haired woman shown in <Picture 1>, with long straight auburn hair, amber spiral-patterned eyes, a black suit, white shirt, and black tie. Preserve her recognizable anime design, calm expression, and composed presence.
+<Picture 1> is the first frame of [Shot 1], showing Makima in a close-up against a blue sky and softly blurred cityscape.
+
+summary:
+[keyframe completion] The target video begins exactly from <Picture 1>, preserving <Subject 1>'s appearance and composition as Makima looks toward the camera, speaks two short Japanese lines, and holds a restrained, knowing smile.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - Makima's red hair, amber spiral eyes, black suit, white shirt, tie, anime appearance, and calm, controlled demeanor are retained.
+<Picture 1> ([Shot 1] first frame): fully_preserved - the opening frame retains the reference close-up, Makima's centered placement, the blue sky, and the softly blurred city skyline.
+
+detailed_description:
+The target video uses a polished cinematic anime style with clean linework, softly shaded colors, natural daylight, and subtle film grain. Keep the camera close to Makima and preserve the reference image's framing and visual identity.
+[Shot 1] The shot begins exactly from <Picture 1>. <Subject 1> (S1) fills the center of the frame in a close-up, her long auburn hair framing her face and amber spiral-patterned eyes directed toward the camera. She wears the same black suit, white shirt, and black tie visible in the reference. A bright blue sky with soft clouds fills the background above a low, out-of-focus city skyline. Gentle daylight outlines the left edge of her hair while soft facial shadows retain the subdued, composed look of the reference. For the opening moment she remains nearly still, then blinks once and makes a small, natural shift of her gaze toward the viewer. The camera slowly pushes in during the opening moment, smoothly coming to rest as Makima begins speaking around 00:02.000. It then holds that framing through both lines of dialogue and the final moment, within one continuous shot. Around 00:02.000, <Subject 1> (S1) speaks in a calm, warm Japanese feminine voice, with measured pacing and a faintly persuasive softness: <d>[Japanese] いい子ですね。私の言うことを聞いてくれますよね？</d> Her lip movement is synchronized to the line; she briefly softens her eyes and lets a small smile form, then closes her mouth naturally.
+At 00:08.000, <Subject 1> remains in the same held framing, maintaining the same anime design, daylight direction, sky, and blurred city background. Makima keeps eye contact, tilts her head only slightly, and lets the smile fade back to a composed expression. The second vocal event is the continuation of <Subject 1> (S1)'s same voice and says, <d>[Japanese] これからも、そばにいてくださいね。</d> She finishes the sentence gently, closes her lips, and holds a quiet, direct gaze through the final frame. Keep the dialogue clear and foregrounded, with no additional voices, singing, captions, or visible text.
+
+overall_soundscape:
+Soft outdoor air and a faint distant city hush continue throughout; no distinct traffic or crowd sounds are audible.
+
+non_diegetic_music:
+A restrained, delicate orchestral texture with sustained strings and a few soft piano notes plays quietly beneath the dialogue, remaining steady and never swelling over her voice.

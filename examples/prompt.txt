@@ -1,0 +1,14 @@
+subject_definitions:
+<Subject 1> is the adult person shown in <Picture 1>. Preserve their appearance, clothing and visual style.
+
+summary:
+[keyframe completion] A continuous shot begins from <Picture 1>. <Subject 1> looks toward the camera, blinks once and gives a small smile.
+
+detailed_description:
+[Shot 1] Keep the composition and lighting from the reference image. <Subject 1> remains near the center of the frame, with a relaxed posture and subtle natural breathing. The camera slowly moves forward during the opening two seconds, then holds still. <Subject 1> blinks once, turns their gaze slightly and returns to the camera. Preserve a consistent face and clothing throughout. Use one continuous shot.
+
+overall_soundscape:
+Quiet environmental ambience matching the reference scene, with a faint clothing rustle during movement.
+
+non_diegetic_music:
+N/A

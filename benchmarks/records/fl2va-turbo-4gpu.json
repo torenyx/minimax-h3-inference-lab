@@ -1,0 +1,100 @@
+{
+  "id": "fl2va-turbo-4gpu",
+  "status": "passed",
+  "denoiser_forwards": 6,
+  "step_seconds": [
+    98.064034,
+    70.177903,
+    71.480845,
+    70.496713,
+    69.983788,
+    70.565449
+  ],
+  "timings": {
+    "Load models": 50.36254,
+    "Run Text Encoder": 10.794593,
+    "Run VAE Encoder": 6.417284,
+    "Run Input Encoder": 17.356428,
+    "Prepare DiT": 1.84925,
+    "step_pre": 0.009121,
+    "🚀 infer_main": 70.550549,
+    "step_post": 0.001581,
+    "Run Dit every step": 70.565449,
+    "Offload DiT": 2.414986,
+    "Run Video VAE Decoder": 36.939928,
+    "Run Audio VAE Decoder": 1.330981,
+    "Run VAE Decoder": 38.272566,
+    "Save Audio-Video Output": 4.703387,
+    "Run DiT": 500.950183,
+    "RUN pipeline": 518.307398,
+    "Total Cost": 568.953018
+  },
+  "video_probe": {
+    "width": 1344,
+    "height": 768,
+    "fps": "24",
+    "audio_streams": 1,
+    "actual_frames": 362
+  },
+  "lora_alpha": 64.0,
+  "lora_strength": 1.0,
+  "lora_scale_verified": true,
+  "ff_chunk_validation": [
+    {
+      "rank": "1",
+      "rows": 16384,
+      "chunk_tokens": 8192,
+      "relative_l2_limit": 0.01,
+      "cosine_minimum": 0.9999,
+      "passed": true,
+      "equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "reference_max_abs": 35840.0,
+      "relative_l2": 0.0,
+      "cosine": 1.0
+    },
+    {
+      "rank": "0",
+      "rows": 16384,
+      "chunk_tokens": 8192,
+      "relative_l2_limit": 0.01,
+      "cosine_minimum": 0.9999,
+      "passed": true,
+      "equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "reference_max_abs": 35840.0,
+      "relative_l2": 0.0,
+      "cosine": 1.0
+    },
+    {
+      "rank": "2",
+      "rows": 16384,
+      "chunk_tokens": 8192,
+      "relative_l2_limit": 0.01,
+      "cosine_minimum": 0.9999,
+      "passed": true,
+      "equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "reference_max_abs": 35840.0,
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552
+    },
+    {
+      "rank": "3",
+      "rows": 16384,
+      "chunk_tokens": 8192,
+      "relative_l2_limit": 0.01,
+      "cosine_minimum": 0.9999,
+      "passed": true,
+      "equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "reference_max_abs": 35840.0,
+      "relative_l2": 0.0,
+      "cosine": 0.9999999403953552
+    }
+  ]
+}

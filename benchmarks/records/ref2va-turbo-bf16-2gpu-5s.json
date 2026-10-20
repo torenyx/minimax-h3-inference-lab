@@ -1,0 +1,40 @@
+{
+  "id": "ref2va-turbo-bf16-2gpu-5s",
+  "status": "passed",
+  "denoiser_forwards": 8,
+  "step_seconds": [
+    32.106502,
+    28.087213,
+    28.133299,
+    28.129239,
+    28.142764,
+    28.137583,
+    28.175116,
+    28.239869
+  ],
+  "timings": {
+    "Load models": 102.026123,
+    "Run Text Encoder": 12.68742,
+    "Run VAE Encoder": 3.83269,
+    "Run Input Encoder": 16.571103,
+    "Prepare DiT": 0.092903,
+    "step_pre": 0.001643,
+    "🚀 infer_main": 28.23637,
+    "step_post": 0.000457,
+    "Run Dit every step": 28.239869,
+    "Offload DiT": 0.201792,
+    "Run Video VAE Decoder": 24.312316,
+    "Run Audio VAE Decoder": 0.864278,
+    "Run VAE Decoder": 25.179536,
+    "Save Audio-Video Output": 1.956473,
+    "Run DiT": 257.329895,
+    "RUN pipeline": 273.902331,
+    "Total Cost": 376.154411
+  },
+  "width": 768,
+  "height": 1344,
+  "actual_frames": 124,
+  "fps": "24",
+  "audio_sample_rate": 32000,
+  "audio_duration_seconds": 5.184
+}
