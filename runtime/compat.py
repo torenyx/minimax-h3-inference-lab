@@ -67,3 +67,19 @@ def enable():
 
     infer_schema._h3_compat = True
     torch.library.infer_schema = infer_schema
+
+    # Torch 2.5 does not expose shared-memory limits on device properties.
+    if torch.cuda.is_available() and not hasattr(torch.cuda.get_device_properties(0), 'shared_memory_per_block'):
+        import ctypes
+        from comfy_kitchen.backends import cuda as kitchen_cuda
+
+        def shared_memory_limit(value):
+            driver = ctypes.CDLL('libcuda.so.1')
+            limit = ctypes.c_int()
+            # CU_DEVICE_ATTRIBUTE_MAX_SHARED_MEMORY_PER_BLOCK_OPTIN
+            code = driver.cuDeviceGetAttribute(ctypes.byref(limit), 97, value.get_device())
+            if code:
+                raise RuntimeError(f'Cannot query CUDA shared-memory limit: {code}')
+            return limit.value
+
+        kitchen_cuda._max_dynamic_shared_memory_per_block = shared_memory_limit

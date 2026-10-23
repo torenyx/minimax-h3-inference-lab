@@ -1,0 +1,224 @@
+[
+  {
+    "profile": "fl2va-turbo",
+    "gpu": "4 x RTX 4090 24GB",
+    "torch_stack": "2.5.1+cu124 / Triton 3.1.0",
+    "simultaneous_other_profile": false,
+    "allocator": "backend:native,expandable_segments:True",
+    "width": 1344,
+    "height": 768,
+    "frames": 362,
+    "steps": 6,
+    "seed": 101,
+    "step_seconds": [
+      43.983987,
+      40.440513,
+      40.558131,
+      40.596686,
+      40.541956,
+      40.609745
+    ],
+    "denoise_seconds": 246.731018,
+    "framework_total_seconds": 330.185435,
+    "launch_seconds": 362.18847797997296,
+    "streams": [
+      {
+        "type": "video",
+        "duration": 15.083333333333334,
+        "codec": "h264"
+      },
+      {
+        "type": "audio",
+        "duration": 15.075,
+        "codec": "aac"
+      }
+    ],
+    "decoded_audio_samples": 482400
+  },
+  {
+    "profile": "ref2va-pdd",
+    "gpu": "4 x RTX 4090 24GB",
+    "torch_stack": "2.5.1+cu124 / Triton 3.1.0",
+    "simultaneous_other_profile": false,
+    "allocator": "backend:native,expandable_segments:True",
+    "width": 768,
+    "height": 1344,
+    "frames": 362,
+    "steps": 8,
+    "seed": 20261013,
+    "step_seconds": [
+      40.953552,
+      37.30913,
+      37.271948,
+      37.323848,
+      37.348961,
+      37.315112,
+      37.369518,
+      37.208487
+    ],
+    "denoise_seconds": 302.100556,
+    "framework_total_seconds": 387.609478,
+    "launch_seconds": 408.9183490239084,
+    "streams": [
+      {
+        "type": "video",
+        "duration": 15.083333333333334,
+        "codec": "h264"
+      },
+      {
+        "type": "audio",
+        "duration": 15.075,
+        "codec": "aac"
+      }
+    ],
+    "decoded_audio_samples": 482400
+  },
+  {
+    "profile": "fl2va-turbo",
+    "gpu": "2 x RTX 4090 24GB",
+    "torch_stack": "2.5.1+cu124 / Triton 3.1.0",
+    "simultaneous_other_profile": true,
+    "allocator": "backend:native,expandable_segments:True",
+    "width": 1344,
+    "height": 768,
+    "frames": 362,
+    "steps": 6,
+    "seed": 101,
+    "step_seconds": [
+      57.246169,
+      52.321871,
+      52.277998,
+      52.270386,
+      52.234124,
+      52.305154
+    ],
+    "denoise_seconds": 318.655702,
+    "framework_total_seconds": 451.96065,
+    "launch_seconds": 482.09282008744776,
+    "streams": [
+      {
+        "type": "video",
+        "duration": 15.083333333333334,
+        "codec": "h264"
+      },
+      {
+        "type": "audio",
+        "duration": 15.075,
+        "codec": "aac"
+      }
+    ],
+    "decoded_audio_samples": 482400
+  },
+  {
+    "profile": "ref2va-pdd",
+    "gpu": "2 x RTX 4090 24GB",
+    "torch_stack": "2.5.1+cu124 / Triton 3.1.0",
+    "simultaneous_other_profile": true,
+    "allocator": "backend:native,expandable_segments:True",
+    "width": 768,
+    "height": 1344,
+    "frames": 362,
+    "steps": 8,
+    "seed": 20261013,
+    "step_seconds": [
+      57.002311,
+      51.939693,
+      52.025278,
+      51.992074,
+      52.029018,
+      51.974588,
+      52.160971,
+      52.018105
+    ],
+    "denoise_seconds": 421.142038,
+    "framework_total_seconds": 538.727021,
+    "launch_seconds": 562.2174667567015,
+    "streams": [
+      {
+        "type": "video",
+        "duration": 15.083333333333334,
+        "codec": "h264"
+      },
+      {
+        "type": "audio",
+        "duration": 15.075,
+        "codec": "aac"
+      }
+    ],
+    "decoded_audio_samples": 482400
+  },
+  {
+    "profile": "fl2va-turbo",
+    "gpu": "2 x RTX 4090 24GB",
+    "torch_stack": "2.9.1+cu130 / Triton 3.5.1",
+    "simultaneous_other_profile": true,
+    "allocator": "backend:native,expandable_segments:True",
+    "width": 1344,
+    "height": 768,
+    "frames": 362,
+    "steps": 6,
+    "seed": 101,
+    "step_seconds": [
+      49.720567,
+      49.271308,
+      49.269795,
+      49.269615,
+      49.229822,
+      49.253513
+    ],
+    "denoise_seconds": 296.01462,
+    "framework_total_seconds": 438.677121,
+    "launch_seconds": 478.0891040675342,
+    "streams": [
+      {
+        "type": "video",
+        "duration": 15.083333333333334,
+        "codec": "h264"
+      },
+      {
+        "type": "audio",
+        "duration": 15.075,
+        "codec": "aac"
+      }
+    ],
+    "decoded_audio_samples": 482400
+  },
+  {
+    "profile": "ref2va-pdd",
+    "gpu": "2 x RTX 4090 24GB",
+    "torch_stack": "2.9.1+cu130 / Triton 3.5.1",
+    "simultaneous_other_profile": true,
+    "allocator": "backend:native,expandable_segments:True",
+    "width": 768,
+    "height": 1344,
+    "frames": 362,
+    "steps": 8,
+    "seed": 20261013,
+    "step_seconds": [
+      53.553205,
+      48.357047,
+      48.35873,
+      48.337316,
+      48.302259,
+      48.326479,
+      48.287687,
+      48.304493
+    ],
+    "denoise_seconds": 391.827216,
+    "framework_total_seconds": 513.160636,
+    "launch_seconds": 544.4423794727772,
+    "streams": [
+      {
+        "type": "video",
+        "duration": 15.083333333333334,
+        "codec": "h264"
+      },
+      {
+        "type": "audio",
+        "duration": 15.075,
+        "codec": "aac"
+      }
+    ],
+    "decoded_audio_samples": 482400
+  }
+]

@@ -93,7 +93,8 @@ def main(argv=None):
     env = os.environ.copy()
     env['PYTHONPATH'] = os.pathsep.join([str(ROOT), env.get('PYTHONPATH', '')])
     for key, value in {'DTYPE': 'BF16', 'SENSITIVE_LAYER_DTYPE': 'BF16', 'OMP_NUM_THREADS': '8',
-                       'PYTHONUNBUFFERED': '1', 'PYTORCH_CUDA_ALLOC_CONF': 'backend:native'}.items():
+                       'PYTHONUNBUFFERED': '1',
+                       'PYTORCH_CUDA_ALLOC_CONF': 'backend:native,expandable_segments:True'}.items():
         env.setdefault(key, value)
     started = time.perf_counter()
     commands = [[sys.executable, '-m', 'runtime.prepare', str(spec_path)],

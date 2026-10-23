@@ -1,6 +1,6 @@
 # Measurements
 
-RTX 3090 24GB. One completed run per final configuration. Times are seconds.
+RTX 3090 and RTX 4090 24GB. One completed run per final configuration. Times are seconds. Unless otherwise labeled, the measurements below use RTX 3090 GPUs.
 
 ## Timing
 
@@ -20,6 +20,27 @@ RTX 3090 24GB. One completed run per final configuration. Times are seconds.
 362 frames, 24 fps. FL2VA uses seed 101 and a first-frame image; Ref2VA uses seed 20261013 and a reference image. All four outputs contain native stereo audio.
 
 The four-card layouts reduce denoising time by 31.34% for FL2VA and 31.78% for Ref2VA relative to their two-card layouts, using twice as many GPUs.
+
+## RTX 4090 runs
+
+Same included inputs, seeds, resolutions and 362 frames as the 15-second resident runs above. INT8 ConvRot, SageAttention 2.2.0 and `backend:native,expandable_segments:True` are used throughout.
+
+| Profile | GPUs | PyTorch / CUDA / Triton | Denoise | Framework total | Launch to exit |
+|---|---:|---|---:|---:|---:|
+| FL2VA Larry 6-step | 4 | 2.5.1 / 12.4 / 3.1.0 | 246.73 | 330.19 | 362.19 |
+| Ref2VA PDD 8-step | 4 | 2.5.1 / 12.4 / 3.1.0 | 302.10 | 387.61 | 408.92 |
+| FL2VA Larry 6-step | 2 | 2.5.1 / 12.4 / 3.1.0 | 318.66 | 451.96 | 482.09 |
+| Ref2VA PDD 8-step | 2 | 2.5.1 / 12.4 / 3.1.0 | 421.14 | 538.73 | 562.22 |
+| FL2VA Larry 6-step | 2 | 2.9.1 / 13.0 / 3.5.1 | 296.01 | 438.68 | 478.09 |
+| Ref2VA PDD 8-step | 2 | 2.9.1 / 13.0 / 3.5.1 | 391.83 | 513.16 | 544.44 |
+
+The two-GPU Turbo and PDD jobs ran concurrently on separate GPU pairs, sharing CPU and storage. Four-GPU jobs ran sequentially. Launch-to-exit includes process startup and preparation checks; initial weight conversion and cache creation were completed beforehand. All six outputs passed full video and audio decoding.
+
+The newer software stack reduces two-GPU denoising time by about 7%, while launch-to-exit time falls by 0.8% for Turbo and 3.2% for PDD. PyTorch and Triton also changed, so these results do not isolate CUDA's contribution. Each configuration has one completed measurement. CUDA 13 four-GPU performance has not been measured.
+
+The existing sample command works with either GPU model and uses the active Python environment. The default installer retains PyTorch 2.5.1 / CUDA 12.4; the CUDA 13 experiment used a separate environment with SageAttention 2.2.0 rebuilt against that stack.
+
+[Raw timings, versions and stream metadata](records/rtx4090-stack-comparison.json)
 
 ## Same-card PDD optimization
 

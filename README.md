@@ -2,7 +2,7 @@
 
 [Simplified Chinese](README.zh-CN.md) · [Video gallery](https://torenyx.github.io/minimax-h3-inference-lab/docs/gallery.html) · [Measurements](benchmarks/README.md) · [Setup](docs/setup.md)
 
-Generate video and native stereo audio with **two or four RTX 3090s**. Three LightX2V profiles cover first-frame generation with Larry Turbo and reference-conditioned generation with PDD or Turbo.
+Generate video and native stereo audio with **two or four RTX 3090 or RTX 4090 GPUs**. Three LightX2V profiles cover first-frame generation with Larry Turbo and reference-conditioned generation with PDD or Turbo.
 
 ## Choose a profile
 

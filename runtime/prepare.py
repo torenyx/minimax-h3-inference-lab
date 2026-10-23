@@ -42,6 +42,8 @@ def main(spec_path):
         link = native / component
         if not link.exists():
             link.symlink_to(model / component, target_is_directory=True)
+    if not fl and not (native / 'transformer_ref').exists():
+        (native / 'transformer_ref').symlink_to(model / 'transformer', target_is_directory=True)
     vae = Path(spec['vae_dir']) if spec.get('vae_dir') else model / 'vae'
     if not vae.exists():
         os.environ.update(H3_CACHE_DIR=str(cache), H3_ORIGINAL_MODEL=str(model))
