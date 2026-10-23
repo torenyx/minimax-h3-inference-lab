@@ -12,7 +12,19 @@ Generate video and native stereo audio with **two or four RTX 3090 or RTX 4090 G
 | Reference image | `ref2va-pdd` · PDD, 8 steps | 15 s · 768×1344 |
 | Reference image | `ref2va-turbo` · LightX2V Turbo, 8 steps | 5 s · 768×1344 |
 
-## Watch the results
+## RTX 4090 performance
+
+15-second samples, 362 frames at 24 fps, INT8 ConvRot and SageAttention 2.2.0. Turbo uses 6 steps at 1344×768; PDD uses 8 steps at 768×1344.
+
+| GPUs | Software stack | Turbo denoise / total | PDD denoise / total |
+|---|---|---:|---:|
+| 2× RTX 4090 | PyTorch 2.5.1 · CUDA 12.4 | 318.66 / 451.96 s | 421.14 / 538.73 s |
+| 4× RTX 4090 | PyTorch 2.5.1 · CUDA 12.4 | 246.73 / 330.19 s | 302.10 / 387.61 s |
+| 2× RTX 4090 | PyTorch 2.9.1 · CUDA 13.0 | 296.01 / 438.68 s | 391.83 / 513.16 s |
+
+Total is framework time, including loading, encoding, denoising, decoding and saving. Initial conversion and cache creation are excluded. Two-GPU jobs ran concurrently on separate pairs; four-GPU jobs ran sequentially. One completed run per configuration. [Full methodology, launch-to-exit times and raw records](benchmarks/README.md#rtx-4090-runs).
+
+## Watch the RTX 3090 results
 
 <table>
 <tr>
